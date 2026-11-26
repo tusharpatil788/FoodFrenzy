@@ -1,0 +1,68 @@
+trigger: none
+
+parameters:
+  - name: service
+    displayName: Service to deploy
+    type: string
+    default: account-service
+    values:
+      - account-service
+      - payment-service
+      - foodfrenzy
+  - name: imageTag
+    displayName: Image tag (commit SHA from ACR)
+    type: string
+
+pool:
+  name: Default
+
+variables:
+  acr: bankcicdtushar788.azurecr.io
+  rg: rg-bankcicd
+  aks: aks-bankcicd
+  chart: helm/banking-service
+
+stages:
+  - stage: Dev
+    jobs:
+      - deployment: DeployDev
+        environment: dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-steps.yml
+                  parameters:
+                    namespace: dev
+                    service: ${{ parameters.service }}
+                    imageTag: ${{ parameters.imageTag }}
+
+  - stage: UAT
+    dependsOn: Dev
+    jobs:
+      - deployment: DeployUat
+        environment: uat
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-steps.yml
+                  parameters:
+                    namespace: uat
+                    service: ${{ parameters.service }}
+                    imageTag: ${{ parameters.imageTag }}
+
+  - stage: Prod
+    dependsOn: UAT
+    jobs:
+      - deployment: DeployProd
+        environment: prod
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: deploy-steps.yml
+                  parameters:
+                    namespace: prod
+                    service: ${{ parameters.service }}
+                    imageTag: ${{ parameters.imageTag }}
