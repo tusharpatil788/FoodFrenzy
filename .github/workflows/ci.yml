@@ -22,7 +22,21 @@ jobs:
           cache: maven
       - name: Build and unit tests
         run: mvn -B clean verify
-
+services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: cdac
+          MYSQL_DATABASE: tushar
+          MYSQL_USER: Tushar Patil
+          MYSQL_PASSWORD: 1998
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u root -proot_password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
   image:
     needs: build-test
     if: github.ref == 'refs/heads/main'
