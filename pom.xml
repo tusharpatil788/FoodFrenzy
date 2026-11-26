@@ -13,9 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FoodFrenzy</name>
 	<description>FoodFrenzy using Spring Boot and Thymeleaf</description>
+	
 	<properties>
-		<java.version>17</java.version>
-	</properties>
+    <java.version>17</java.version>
+    <!-- Override SnakeYAML to fix CVE-2022-1471 -->
+    <snakeyaml.version>2.2</snakeyaml.version>
+    </properties>
+
 	<dependencies>
     <dependency>
 			<groupId>org.springframework.boot</groupId>
