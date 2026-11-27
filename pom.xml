@@ -16,8 +16,10 @@
 	<description>FoodFrenzy using Spring Boot and Thymeleaf</description>
 	
 	<properties>
-    <java.version>17</java.version>
-    </properties>
+    <java.version>25</java.version>
+    <tomcat.version>10.1.59</tomcat.version>
+    <jackson-bom.version>2.21.7</jackson-bom.version>
+	</properties>
 
 	<dependencies>
 
@@ -26,6 +28,7 @@
 			<artifactId>snakeyaml</artifactId>
     		<version>2.2</version>
     	</dependency> 
+		
     	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -42,6 +45,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -63,22 +67,22 @@
 		
 		
 		
-		  <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-test</artifactId>
-        <scope>test</scope>
-    </dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+    	</dependency>
 		
 		
-	 <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
+	 	<dependency>
+       	 	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-security</artifactId>
+    	</dependency>
 
-    <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>	
+    	<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-actuator</artifactId>
+    	</dependency>	
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

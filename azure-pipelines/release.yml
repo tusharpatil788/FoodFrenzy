@@ -4,11 +4,9 @@ parameters:
   - name: service
     displayName: Service to deploy
     type: string
-    default: account-service
+    default: foodfrenzy-service
     values:
-      - account-service
-      - payment-service
-      - foodfrenzy
+      - foodfrenzy-service
   - name: imageTag
     displayName: Image tag (commit SHA from ACR)
     type: string
@@ -17,10 +15,10 @@ pool:
   name: Default
 
 variables:
-  acr: bankcicdtushar788.azurecr.io
-  rg: rg-bankcicd
-  aks: aks-bankcicd
-  chart: helm/banking-service
+  acr: foodfrenzy98.azurecr.io
+  rg: rg-foodfrenzy98
+  aks: aks-foodfrenzy98
+  chart: helm/foodfrenzy-service
 
 stages:
   - stage: Dev

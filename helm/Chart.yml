@@ -1,0 +1,6 @@
+apiVersion: v2
+name: foodfrenzy-service
+description: Reusable chart for foodfrenzy microservices
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
