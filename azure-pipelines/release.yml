@@ -6,7 +6,7 @@ parameters:
     type: string
     default: foodfrenzy-service
     values:
-      - foodfrenzy-service
+      - foodfrenzy
   - name: imageTag
     displayName: Image tag (commit SHA from ACR)
     type: string
