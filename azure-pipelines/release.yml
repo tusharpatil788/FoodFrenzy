@@ -4,8 +4,10 @@ parameters:
   - name: service
     displayName: Service to deploy
     type: string
-    default: foodfrenzy-service
+    default: account-service
     values:
+      - account-service
+      - payment-service
       - foodfrenzy
   - name: imageTag
     displayName: Image tag (commit SHA from ACR)
