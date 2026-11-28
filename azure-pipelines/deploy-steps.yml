@@ -1,0 +1,35 @@
+parameters:
+  - name: namespace
+    type: string
+  - name: service
+    type: string
+  - name: imageTag
+    type: string
+
+steps:
+  - checkout: self
+
+  - task: AzureCLI@2
+    displayName: Helm deploy to ${{ parameters.namespace }}
+    inputs:
+      azureSubscription: sc-azure
+      scriptType: ps
+      scriptLocation: inlineScript
+      failOnStandardError: false
+      inlineScript: |
+        $kubeconfig = "$(Agent.TempDirectory)\kubeconfig-${{ parameters.namespace }}"
+        az aks get-credentials -g $(rg) -n $(aks) --file $kubeconfig --overwrite-existing
+        $env:KUBECONFIG = $kubeconfig
+
+        helm upgrade --install ${{ parameters.service }} $(chart) `
+          -n ${{ parameters.namespace }} --create-namespace `
+          -f $(chart)/values-${{ parameters.namespace }}.yaml `
+          --set image.repository=$(acr)/${{ parameters.service }} `
+          --set image.tag=${{ parameters.imageTag }} `
+          --rollback-on-failure --timeout 5m
+        if ($LASTEXITCODE -ne 0) { exit 1 }
+
+        kubectl rollout status deployment/${{ parameters.service }} -n ${{ parameters.namespace }} --timeout=120s
+        if ($LASTEXITCODE -ne 0) { exit 1 }
+
+        helm history ${{ parameters.service }} -n ${{ parameters.namespace }}
