@@ -50,16 +50,6 @@ jobs:
       - name: Show image name
         run: echo "Scanning ${IMAGE}:${{ github.sha }}"
 
-      - name: Trivy scan
-        run: |
-          docker run --rm \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            -v ${{ github.workspace }}/.trivyignore:/.trivyignore \
-            aquasec/trivy:latest image \
-            --ignorefile /.trivyignore \
-            --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
-            $IMAGE:${{ github.sha }}
-
   image:
     needs: build-test
     if: github.ref == 'refs/heads/main'
@@ -75,10 +65,13 @@ jobs:
 
       - name: Trivy scan
         run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v ${{ github.workspace }}/.trivyignore:/.trivyignore \
             aquasec/trivy:latest image \
+            --ignorefile /.trivyignore \
             --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
-            $IMAGE:${{ github.sha }}
+            $IMAGE:${{ github.sha }}}
 
       - name: Login to ACR
         uses: docker/login-action@v3
