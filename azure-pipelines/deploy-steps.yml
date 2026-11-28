@@ -16,13 +16,7 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        set -e
-        az aks get-credentials -g $(rg) -n $(aks) --overwrite-existing
-        helm upgrade --install ${{ parameters.service }} $(chart) \
-          -n ${{ parameters.namespace }} --create-namespace \
-          -f $(chart)/values-${{ parameters.namespace }}.yaml \
-          --set image.repository=$(acr)/${{ parameters.service }} \
-          --set image.tag=${{ parameters.imageTag }} \
-          --atomic --timeout 5m
-        kubectl rollout status deployment/${{ parameters.service }} -n ${{ parameters.namespace }} --timeout=120s
-        helm history ${{ parameters.service }} -n ${{ parameters.namespace }}
+        Set-Location "$(Build.SourcesDirectory)\helm\banking-service"
+        az aks command invoke -g $(rg) -n $(aks) `
+          --file . `
+        --command "helm upgrade --install ${{ parameters.service }} . -n ${{ parameters.namespace }} --create-namespace -f values-${{ parameters.namespace }}.yaml --set image.repository=$(acr)/${{ parameters.service }} --set image.tag=${{ parameters.imageTag }} --atomic --timeout 5m"
