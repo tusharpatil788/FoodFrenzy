@@ -18,6 +18,11 @@
 	
 	<properties>
     <java.version>17</java.version>
+    <tomcat.version>10.1.59</tomcat.version>
+    <jackson-bom.version>2.21.7</jackson-bom.version>
+    <micrometer.version>1.15.12</micrometer.version>
+    <spring-framework.version>6.2.19</spring-framework.version>
+    <spring-data-bom.version>2025.0.12</spring-data-bom.version>
 	</properties>
 
 	<dependencies>
