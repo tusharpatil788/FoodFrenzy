@@ -47,6 +47,16 @@ jobs:
           SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
         run: mvn -B clean verify
 
+      - name: Trivy scan
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v ${{ github.workspace }}/.trivyignore:/.trivyignore \
+            aquasec/trivy:latest image \
+            --ignorefile /.trivyignore \
+            --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
+            $IMAGE:${{ github.sha }}
+
   image:
     needs: build-test
     if: github.ref == 'refs/heads/main'

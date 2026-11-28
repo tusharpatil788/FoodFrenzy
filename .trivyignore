@@ -1,0 +1,5 @@
+# Accepted: spring-webmvc XsltView and SSE-with-views issues.
+# FoodFrenzy renders with Thymeleaf and has no XSLT or SSE views (checked with a source search).
+# Fix needs Spring Framework 7 (Spring Boot 4). Review and migrate before the expiry date.
+CVE-2026-47884 exp:2026-12-31
+CVE-2026-47890 exp:2026-12-31
