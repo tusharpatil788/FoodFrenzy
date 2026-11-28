@@ -14,7 +14,7 @@ parameters:
     type: string
 
 pool:
-  name: Default
+  name: ubuntu-latest
 
 variables:
   acr: foodfrenzy98.azurecr.io

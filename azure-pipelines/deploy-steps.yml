@@ -13,7 +13,7 @@ steps:
     displayName: Helm deploy to ${{ parameters.namespace }}
     inputs:
       azureSubscription: sc-azure
-      scriptType: ps
+      scriptType: bash
       scriptLocation: inlineScript
       failOnStandardError: false
       inlineScript: |
