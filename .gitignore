@@ -39,3 +39,6 @@ build/
 terraform.tfvars
 tfplan
 crash.log
+target/
+.idea/
+.vscode/
